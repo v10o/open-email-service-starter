@@ -57,7 +57,18 @@ public class OpenEmailServiceImpl implements OpenEmailService {
                 return new javax.mail.PasswordAuthentication(buildFromEmailProperties().getAppUsername(), buildFromEmailProperties().getAppPassword());
             }
         });
+        return new MimeMessage(session);
+    }
 
+    @Override
+
+    public MimeMessage initializeEmailService(OpenEmailConfig openEmailConfig){
+        Session session =  Session.getInstance(openEmailConfig.toProperties(), new javax.mail.Authenticator() {
+            @Override
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                return new javax.mail.PasswordAuthentication(openEmailConfig.getAppUsername(), openEmailConfig.getAppPassword());
+            }
+        });
         return new MimeMessage(session);
     }
 
@@ -73,7 +84,7 @@ public class OpenEmailServiceImpl implements OpenEmailService {
 
     @Override
     public boolean send(String toEmail, String subjects, String body) throws MessagingException {
-        try{
+        try {
             MimeMessage message = this.initializeEmailService();
             message.setFrom(new InternetAddress(this.fromEmail));
             message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(toEmail));
@@ -84,16 +95,26 @@ public class OpenEmailServiceImpl implements OpenEmailService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return true;
     }
 
-
+    @Override
+    public boolean send(OpenEmailConfig config, String toEmail, String subjects, String body) {
+        try {
+            MimeMessage message = this.initializeEmailService(config);
+            message.setFrom(new InternetAddress(config.getFromEmail()));
+            message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(toEmail));
+            message.setSubject(subjects);
+            message.setContent(body, "text/html; charset=utf-8");
+            message.setHeader("X-Mailer", "Open Email Service");
+            Transport.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
     protected boolean isValidProperties(){
         return true;
     }
-
-
-
 }
 

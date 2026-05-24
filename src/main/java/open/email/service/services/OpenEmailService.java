@@ -15,9 +15,11 @@ public interface OpenEmailService {
     OpenEmailConfig buildFromEmailProperties();
 
     MimeMessage initializeEmailService();
+    MimeMessage initializeEmailService(OpenEmailConfig config);
 
     void initializeMimeType();
 
     void send(String fromEmail, String toEmail, String subjects, String body);
     boolean send(String toEmail, String subjects, String body) throws MessagingException;
+    boolean send(OpenEmailConfig config, String toEmail, String subjects, String body) throws MessagingException;
 }

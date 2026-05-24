@@ -8,6 +8,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Open Email Service Starter" );
+        System.out.println( "Open Email Service Starter is ready to load email configuration and send messages." );
     }
 }

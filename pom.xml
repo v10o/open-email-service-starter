@@ -4,7 +4,7 @@
 
   <groupId>open.email.service</groupId>
   <artifactId>open-email-service-starter</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
   <packaging>jar</packaging>
 
   <name>open-email-service-starter</name>
@@ -13,7 +13,7 @@
     <repository>
       <id>github</id>
       <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/noodlescripter/open-email-service-starter</url>
+      <url>https://maven.pkg.github.com/v10o/open-email-service-starter</url>
     </repository>
   </distributionManagement>
 
